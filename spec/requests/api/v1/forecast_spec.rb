@@ -6,5 +6,9 @@ describe "Forecast API" do
     get api_v1_forecast_index_path(params: { location: "denver, co" })
 
     expect(response).to be_successful
+    expect(response.status).to eq(200)
+    forecast = JSON.parse(response.body, symbolize_names: true)
+    # require "pry"; binding.pry
+    expect(forecast).to be_a(Hash)
   end
 end

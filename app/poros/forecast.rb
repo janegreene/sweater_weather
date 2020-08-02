@@ -1,8 +1,9 @@
 class Forecast
-  attr_reader :id, :timezone, :time, :current, :daily, :hourly
+  attr_reader :id, :timezone, :time, :current, :daily, :hourly, :location
   #before action to initialize other poros
 
 def initialize(forecast_json)
+  @location =
   @timezone = forecast_json[:timezone]
   @time = convert_day_and_time(forecast_json[:current][:dt])
   @current = format_current(forecast_json[:current])
@@ -12,7 +13,7 @@ def initialize(forecast_json)
 end
 
 private
-  def convert_time(unix_time)
+  def convert_hourly_time(unix_time)
     Time.at(unix_time).strftime('%l:%M %p')
   end
 
@@ -20,12 +21,15 @@ private
     Time.at(unix_time).strftime('%l:%M %p, %B %e')
   end
 
+  def convert_day(unix_time)
+    Time.at(unix_time).strftime('%A')
+  end
+
   def format_current(current_json)
-    # test = current_json.without(:dew_point, :wind_speed, :pressure, :wind_deg, :clouds)
       current_forecast = {
         day_time: convert_day_and_time(current_json[:dt]),
-        sunrise: convert_time(current_json[:sunrise]),
-        sunset: convert_time(current_json[:sunset]),
+        sunrise: convert_hourly_time(current_json[:sunrise]),
+        sunset: convert_hourly_time(current_json[:sunset]),
         temp: current_json[:temp],
         feels_like: current_json[:feels_like],
         humidity: current_json[:humidity],
@@ -34,16 +38,16 @@ private
         weather: current_json[:weather]
       }
   end
-  #do I also need a method for day "saturday" conversion?
+
   def format_daily(daily_json)
-    daily_json.map do |forecast|
-      {
-        day: forecast[:dt],
+    days = daily_json.map do |forecast|
+      test = {
+        day: convert_day(forecast[:dt]),
         max_temp: forecast[:temp][:max],
         min_temp: forecast[:temp][:min],
         icon: forecast[:weather][0][:icon],
-        description: forecast[:weather][0][:description],
-        precipitation: forecast[:rain]
+        description: forecast[:weather][0][:main],
+        precipitation: forecast[:rain] || 0
       }
     end
   end
@@ -51,7 +55,7 @@ private
   def format_hourly(hourly_json)
     hourly_json.map do |forecast|
       {
-      time: forecast[:dt],
+      time: convert_hourly_time(forecast[:dt]),
       temp: forecast[:temp],
       icon: forecast[:weather][0][:icon]
       }
