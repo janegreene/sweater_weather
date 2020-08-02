@@ -6,5 +6,4 @@ describe "MapquestService" do
     expect(lat_lon_info[:results][0][:locations][0][:latLng][:lat]).to eq(39.738453)
     expect(lat_lon_info[:results][0][:locations][0][:latLng][:lng]).to eq(-104.984853)
   end
-
 end

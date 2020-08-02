@@ -26,7 +26,7 @@ private
   end
 
   def format_current(current_json)
-      current_forecast = {
+      {
         day_time: convert_day_and_time(current_json[:dt]),
         sunrise: convert_hourly_time(current_json[:sunrise]),
         sunset: convert_hourly_time(current_json[:sunset]),
@@ -40,8 +40,8 @@ private
   end
 
   def format_daily(daily_json)
-    days = daily_json.map do |forecast|
-      test = {
+    daily_json.map do |forecast|
+      {
         day: convert_day(forecast[:dt]),
         max_temp: forecast[:temp][:max],
         min_temp: forecast[:temp][:min],
