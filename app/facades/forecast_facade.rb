@@ -9,5 +9,4 @@ class ForecastFacade
    forecast_json = weather.fetch_weather(lat, long)
    forecast = Forecast.new(forecast_json, location)
   end
-
 end
