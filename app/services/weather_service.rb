@@ -4,6 +4,8 @@ class WeatherService
     response = conn.get("/data/2.5/onecall") do |faraday|
       faraday.params['lat'] = latitude
       faraday.params['lon'] = longitude
+      faraday.params["units"] = "imperial"
+      faraday.params["exclude"] = "minutely"
     end
 
     JSON.parse(response.body, symbolize_names: true)
