@@ -1,8 +1,10 @@
 class Forecast
   attr_reader :id, :timezone, :time, :current, :daily, :hourly
+  #before action to initialize other poros
+
 def initialize(forecast_json)
   @timezone = forecast_json[:timezone]
-  @time = convert_time(forecast_json[:current][:dt])
+  @time = convert_day_and_time(forecast_json[:current][:dt])
   @current = format_current(forecast_json[:current])
   @daily = format_daily(forecast_json[:daily])
   @hourly = format_hourly(forecast_json[:hourly])
@@ -11,14 +13,28 @@ end
 
 private
   def convert_time(unix_time)
-    test = Time.at(unix_time).strftime('%I:%M %p')#.in_time_zone(@timezone)
-    require "pry"; binding.pry
+    Time.at(unix_time).strftime('%l:%M %p')
+  end
+
+  def convert_day_and_time(unix_time)
+    Time.at(unix_time).strftime('%l:%M %p, %B %e')
   end
 
   def format_current(current_json)
-    current_json.without(:dew_point, :wind_speed, :pressure, :wind_deg, :clouds)
+    # test = current_json.without(:dew_point, :wind_speed, :pressure, :wind_deg, :clouds)
+      current_forecast = {
+        day_time: convert_day_and_time(current_json[:dt]),
+        sunrise: convert_time(current_json[:sunrise]),
+        sunset: convert_time(current_json[:sunset]),
+        temp: current_json[:temp],
+        feels_like: current_json[:feels_like],
+        humidity: current_json[:humidity],
+        uvi: current_json[:uvi],
+        visibility: current_json[:visibility],
+        weather: current_json[:weather]
+      }
   end
-
+  #do I also need a method for day "saturday" conversion?
   def format_daily(daily_json)
     daily_json.map do |forecast|
       {
