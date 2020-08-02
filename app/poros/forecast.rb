@@ -2,7 +2,7 @@ class Forecast
   attr_reader :id, :timezone, :time, :current, :daily, :hourly
 def initialize(forecast_json)
   @timezone = forecast_json[:timezone]
-  @time = forecast_json[:current][:dt]
+  @time = convert_time(forecast_json[:current][:dt])
   @current = format_current(forecast_json[:current])
   @daily = format_daily(forecast_json[:daily])
   @hourly = format_hourly(forecast_json[:hourly])
@@ -11,8 +11,8 @@ end
 
 private
   def convert_time(unix_time)
-    # test = Time.at(unix_time).in_time_zone(@timezone)
-    # require "pry"; binding.pry
+    test = Time.at(unix_time).strftime('%I:%M %p')#.in_time_zone(@timezone)
+    require "pry"; binding.pry
   end
 
   def format_current(current_json)

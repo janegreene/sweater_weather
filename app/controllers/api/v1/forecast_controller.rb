@@ -13,7 +13,6 @@ class Api::V1::ForecastController < ApplicationController
     forecast_json = weather.fetch_weather(lat, long)
     test = Forecast.new(forecast_json)
 
-    # require "pry"; binding.pry
     # call maquest from here to get latLng
     #pass lat long to forecast service to call api but do it all here first to get it working
     #the object of this method is to return a forecast when it is called
