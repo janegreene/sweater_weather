@@ -2,8 +2,8 @@ class Forecast
   attr_reader :id, :timezone, :time, :current, :daily, :hourly, :location
   #before action to initialize other poros
 
-def initialize(forecast_json)
-  @location =
+def initialize(forecast_json, location)
+  @location = location
   @timezone = forecast_json[:timezone]
   @time = convert_day_and_time(forecast_json[:current][:dt])
   @current = format_current(forecast_json[:current])
