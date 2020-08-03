@@ -5,7 +5,6 @@ class Api::V1::UsersController < ApplicationController
       render json: UserSerializer.new(user), status: :created
     else
       render json: "Please try again", status: 400
-    #   render :json => { status: 400, :errors => user.errors.full_messages }, status: 400
     end
   end
 

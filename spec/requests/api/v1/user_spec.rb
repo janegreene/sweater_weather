@@ -18,18 +18,18 @@ describe "User endpoint" do
     expect(User.all.count).to eq(1)
   end
   context "with invalid parameters" do
-      let(:invalid_params) do
-        {
-          "email": "example@example.com",
-          "password": "password",
-          "password_confirmation": "different_password"
-        }
-      end
-
-      it "cannot create a new user with invalid attributes" do
-        expect { post "/api/v1/users", params: invalid_params }.to_not change(User, :count)
-        expect(response).to have_http_status(400)
-        expect(response.body).to eq("Please try again")
-      end
+    let(:invalid_params) do
+      {
+        "email": "example@example.com",
+        "password": "password",
+        "password_confirmation": "different_password"
+      }
     end
+
+    it "cannot create a new user with invalid attributes" do
+      expect { post "/api/v1/users", params: invalid_params }.to_not change(User, :count)
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("Please try again")
+    end
+  end
 end
