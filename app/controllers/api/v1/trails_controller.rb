@@ -18,6 +18,7 @@ class Api::V1::TrailsController < ApplicationController
     forecast = ForecastFacade.new.get_weather(location)
     Trail.format_trails(trails)
     trail_objs = Trail.all_instances
-       require "pry"; binding.pry
+    render json: TrailSerializer.new(trail_objs)
+       # require "pry"; binding.pry
   end
 end
