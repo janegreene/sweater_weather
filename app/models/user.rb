@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  validates :email, uniqueness: true, presence: true
-  validates :api_key, uniqueness: true, presence: true
   has_secure_password
-  before_validation :set_api_key
+  validates :email, uniqueness: true, presence: true
+  validates :password, presence: true, on: :create
+  validates :password_digest, presence: true
+  before_create :set_api_key
 
   private
   def set_api_key
