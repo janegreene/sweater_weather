@@ -3,7 +3,8 @@ class Api::V1::UsersController < ApplicationController
     if params[:password] == params[:password_confirmation]
       user = User.create(user_params)
       render json: UserSerializer.new(user), status: :created
-    # else
+    else
+      render json: "Please try again", status: 400
     #   render :json => { status: 400, :errors => user.errors.full_messages }, status: 400
     end
   end
