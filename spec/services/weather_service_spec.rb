@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe "WeatherService" do
   it "#fetch_weather" do
-    # WebMock.allow_net_connect!
     VCR.use_cassette('weather_for_denver_co') do
       latitude = 39.738453
       longitude = -104.984853

@@ -2,7 +2,6 @@ class MapquestService
   def get_lat_long(params)
     response = Faraday.get('https://www.mapquestapi.com/geocoding/v1/address') do |faraday|
         faraday.params['key'] = ENV['mapquest_api_key']
-        # require "pry"; binding.pry
         faraday.params['location'] = params
         faraday.params['outFormat'] = 'json'
     end

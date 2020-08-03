@@ -68,6 +68,7 @@ RSpec.configure do |config|
     config.hook_into :webmock
     config.filter_sensitive_data('<open_weather_api_key>') { ENV['open_weather_api_key'] }
     config.filter_sensitive_data('<mapquest_api_key>') { ENV['mapquest_api_key'] }
+    config.filter_sensitive_data('<unsplash_key>') { ENV['unsplash_key'] }
     config.allow_http_connections_when_no_cassette = true
   end
 end
