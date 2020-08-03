@@ -23,7 +23,8 @@ describe 'as a user' do
   it 'does not accept bad password' do
     post "/api/v1/sessions?email=#{@params[:email]}&password=wrongpassword"
 
-    expect(response.status).to eq(401)
-    expect(response.body).to eq("Please try again")
+    expect(response.status).to eq(400)
+    error = JSON.parse(response.body, symbolize_names: true)[:error]
+    expect(error).to eq("Please try again")
   end
 end
