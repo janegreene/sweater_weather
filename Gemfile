@@ -47,6 +47,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'orderly'
+  gem 'bcrypt'
 end
 
 group :development do
