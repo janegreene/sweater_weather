@@ -1,17 +1,22 @@
 class Trail
    @@trails = Array.new
-  def initialize(trail_info)
+  def initialize(trail_info, distance)
     @name = trail_info[:name]
     @difficulty = trail_info[:difficulty]
     @summary = trail_info[:summary]
-    @latitude = trail_info[:latitude]
-    @longitude = trail_info[:longitude]
     @location = trail_info[:location]
+    @distance_to_trail = distance[0]
     @@trails << self
   end
   def self.format_trails(json)
     json[:trails].each do |trail|
-      Trail.new(trail)
+      # require "pry"; binding.pry
+      location = trail[:location]
+      find_distance = MapquestService.new.get_distance(location)
+      distance = find_distance.map do |distance|
+        distance[1][:distance]
+      end
+      Trail.new(trail, distance)
     end
   end
 
