@@ -1,9 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   def create
     if params[:password] == params[:password_confirmation]
-      @user = User.create!(user_params)
-      require "pry"; binding.pry
-      # render json: UserSerializer.new(@user)
+      @user = User.create(user_params)
+      # require "pry"; binding.pry
+      render json: UserSerializer.new(@user), status: :created
     end
   end
 
