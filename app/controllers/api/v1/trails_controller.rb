@@ -16,7 +16,8 @@ class Api::V1::TrailsController < ApplicationController
     response = conn.get("/data/get-trails")
     trails = JSON.parse(response.body, symbolize_names: true)
     forecast = ForecastFacade.new.get_weather(location)
-    Trail.new(trails)
-       # require "pry"; binding.pry
+    Trail.format_trails(trails)
+    trail_objs = Trail.all_instances
+       require "pry"; binding.pry
   end
 end
