@@ -11,8 +11,9 @@ class Api::V1::MunchiesController < ApplicationController
     faraday.params["location"] = params[:end]
   end
   json = JSON.parse(response.body, symbolize_names: true)
-    name = json[:businesses][0][:name]
-    address = json[:businesses][0][:location][:display_address].join(", ")
-    
+    # name = json[:businesses][0][:name]
+    # address = json[:businesses][0][:location][:display_address].join(", ")
+    Restaurant.new(json)
+    destination_forecast = WeatherService.new.destination_weather(params[:end])
   end
 end

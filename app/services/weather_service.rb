@@ -10,6 +10,16 @@ class WeatherService
 
     JSON.parse(response.body, symbolize_names: true)
   end
+  def destination_weather(location)
+    response = conn.get("/data/2.5/weather") do |faraday|
+      faraday.params['q'] = location
+      faraday.params["units"] = "imperial"
+      faraday.params["exclude"] = "minutely"
+    end
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    json[:weather][0][:description]
+  end
 
 private
 
