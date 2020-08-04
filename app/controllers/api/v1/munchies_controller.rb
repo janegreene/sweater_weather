@@ -17,7 +17,9 @@ class Api::V1::MunchiesController < ApplicationController
     # food = Restaurant.new(json)
     # forecast = WeatherService.new.destination_weather(params[:end])
     munchie = Munchie.new(params, json_food)
-    test = MunchieSerializer.new(munchie)
+    test1 = munchie.format_munchie
+    require "pry"; binding.pry
+    render json: MunchieSerializer.new(test1)
     # require "pry"; binding.pry
   end
 end

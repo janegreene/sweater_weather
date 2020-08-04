@@ -7,7 +7,7 @@ describe "Munchies API endpoint" do
       expect(response).to be_successful
       expect(response.status).to eq(200)
 
-      forecast = JSON.parse(response.body, symbolize_names: true)
-      expect(forecast).to be_a(Hash)
+      munchie = JSON.parse(response.body, symbolize_names: true)
+      expect(munchie).to be_a(Hash)
     end
   end
