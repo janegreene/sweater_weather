@@ -10,6 +10,9 @@ class Api::V1::MunchiesController < ApplicationController
     faraday.params["term"] = params[:food]
     faraday.params["location"] = params[:end]
   end
-    require "pry"; binding.pry
+  json = JSON.parse(response.body, symbolize_names: true)
+    name = json[:businesses][0][:name]
+    address = json[:businesses][0][:location][:display_address].join(", ")
+    
   end
 end
