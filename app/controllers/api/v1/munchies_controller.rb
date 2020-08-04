@@ -13,7 +13,10 @@ class Api::V1::MunchiesController < ApplicationController
   json = JSON.parse(response.body, symbolize_names: true)
     # name = json[:businesses][0][:name]
     # address = json[:businesses][0][:location][:display_address].join(", ")
-    Restaurant.new(json)
-    destination_forecast = WeatherService.new.destination_weather(params[:end])
+    food = Restaurant.new(json)
+    forecast = WeatherService.new.destination_weather(params[:end])
+    munchie = Munchie.new(params, food, forecast)
+    test = MunchieSerializer.new(munchie)
+    require "pry"; binding.pry
   end
 end
