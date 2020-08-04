@@ -10,13 +10,13 @@ class Api::V1::MunchiesController < ApplicationController
     faraday.params["term"] = params[:food]
     faraday.params["location"] = params[:end]
   end
-  json = JSON.parse(response.body, symbolize_names: true)
+  json_food = JSON.parse(response.body, symbolize_names: true)
     # name = json[:businesses][0][:name]
     # address = json[:businesses][0][:location][:display_address].join(", ")
-    food = Restaurant.new(json)
-    forecast = WeatherService.new.destination_weather(params[:end])
-    munchie = Munchie.new(params, food, forecast)
+    # food = Restaurant.new(json)
+    # forecast = WeatherService.new.destination_weather(params[:end])
+    munchie = Munchie.new(params, json_food)
     test = MunchieSerializer.new(munchie)
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 end
