@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :background, only: [:index]
       resources :users, only: [:create]
       resources :sessions, only: [:create]
+      resources :business, only: [:index]
     end
   end
 end
